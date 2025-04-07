@@ -4,7 +4,8 @@ on:
   push:
     branches:
       - main # 您可以修改为需要触发的分支名
-
+permissions:
+  contents: write
 jobs:
   build-and-release:
     runs-on: ubuntu-latest

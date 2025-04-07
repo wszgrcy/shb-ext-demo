@@ -32,4 +32,4 @@ jobs:
           fail_on_unmatched_files: true
           tag_name: '0.0.1'
           files: dist/shb-ext-demo-*.vsix
-          token: ${{ secrets.TOKEN }}
+          # token: ${{ secrets.TOKEN }}

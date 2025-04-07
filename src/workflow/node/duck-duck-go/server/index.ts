@@ -71,30 +71,33 @@ export function duckduckgoRunner(input: ManifestInput) {
             },
           ],
         });
-
-        const streamData = {
-          id: this.node.id,
-          type: 'chat' as const,
+        const streamData = this.emitter.createLLMData({
+          node: this.node,
           value: '',
-          metadata: result.map((item) => {
-            return {
-              type: '链接',
-              description: item.title,
-              reference: {
-                type: 'url',
-                title: item.title,
-                url: item.url,
-              },
-            };
-          }),
-          historyList: [],
-          increment: '',
-        } as any;
+          extra: {
+            references: result.map((item) => {
+              return {
+                type: '链接',
+                description: item.title,
+                reference: {
+                  type: 'url',
+                  title: item.title,
+                  url: item.url,
+                },
+              };
+            }),
+            historyList: [],
+            delta: '',
+            content: '',
+          },
+        });
+        const endRef = this.injector.get(input.provider.root.ChatUtilService).getMetadataEndRef(streamData.extra!.references);
+
         for await (const item of res2) {
-          streamData.value = item.content;
-          streamData.thinkContent = item.thinkContent;
-          streamData.increment = item.delta;
-          streamData.isThinking = item.isThinking;
+          const value = endRef ? item.content + endRef : item.content;
+          streamData.value = value;
+          streamData.extra = { ...streamData.extra, ...item, content: value };
+
           this.emitter.send(streamData);
         }
 

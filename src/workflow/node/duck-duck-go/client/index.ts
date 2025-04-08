@@ -11,7 +11,6 @@ export default (input: ComponentInput) => {
           transform: {
             resizable: true,
           },
-          title: '对话',
         },
         width: 300,
       };

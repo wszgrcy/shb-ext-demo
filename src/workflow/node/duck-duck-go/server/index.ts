@@ -23,11 +23,15 @@ const prompt2 = `使用提供的上下文回答用户查询，并且仅在上下
 // todo 此节点仅作为演示使用,因为最优化的搜索还是搞api或者说爬虫获得更具体的网页
 export function duckduckgoRunner(input: ManifestInput) {
   return class extends input.provider.workflow.NodeRunnerBase {
+    #chatUtil = input.inject(input.provider.root.ChatUtilService);
+
     override async run() {
       return async () => {
         let instance = this.injector.get(input.provider.root.ChatService);
         let data = this.getParsedNode(NODE_DEFINE(input.componentDefine));
         console.log('配置', data);
+        const chatInput = this.#chatUtil.interpolate(data.data.value, this.inputValueObject$$());
+        console.log(chatInput);
 
         let res = (await instance.chat()).stream({
           messages: [
@@ -35,7 +39,7 @@ export function duckduckgoRunner(input: ManifestInput) {
               role: 'system',
               content: [{ text: query, type: 'text' }],
             },
-            { role: 'user', content: [{ text: data.data.value, type: 'text' }] },
+            { role: 'user', content: [{ text: chatInput, type: 'text' }] },
           ],
         });
         let content1 = '';
@@ -67,7 +71,7 @@ export function duckduckgoRunner(input: ManifestInput) {
             },
             {
               role: 'user',
-              content: [{ text: `问题: ${data.data.value}\n上下文: ${data2}`, type: 'text' }],
+              content: [{ text: `问题: ${chatInput}\n上下文: ${data2}`, type: 'text' }],
             },
           ],
         });

@@ -24,6 +24,14 @@ export function NODE_DEFINE({ Action }: ComponentInput) {
                 type: 'string',
                 wrappers: ['tooltip', 'form-field'],
               }),
+              Action.valueChange({
+                list: [undefined],
+                debounceTime: 100,
+                when: ([value]: string[], field) => {
+                  // xxx{{xxx}}
+                  field.context.changeHandleByTemplate(field, value, 1);
+                },
+              }),
             ],
           })
         ),

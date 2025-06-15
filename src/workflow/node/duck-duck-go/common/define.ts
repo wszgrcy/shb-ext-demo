@@ -1,6 +1,7 @@
 import * as v from 'valibot';
 import { ComponentInput } from '@shenghuabi/sdk/componentDefine';
 import { LLM_CONFIG } from '../../../../define/llm.define';
+import { debounceTime, filter } from 'rxjs';
 
 export function NODE_DEFINE({ Action }: ComponentInput) {
   return v.object({
@@ -23,14 +24,18 @@ export function NODE_DEFINE({ Action }: ComponentInput) {
               Action.define({
                 type: 'string',
                 wrappers: ['tooltip', 'form-field'],
+                
               }),
-              Action.valueChange({
-                list: [undefined],
-                debounceTime: 100,
-                when: ([value]: string[], field) => {
-                  // xxx{{xxx}}
-                  field.context.changeHandleByTemplate(field, value, 1);
-                },
+
+              Action.valueChange((fn) => {
+                fn({ list: [undefined] })
+                  .pipe(debounceTime(100))
+                  .subscribe(({ list: [value], field }) => {
+                    if (typeof value !== 'string') {
+                      return;
+                    }
+                    field.context.changeHandleByTemplate(field, value, 1);
+                  });
               }),
             ],
           })

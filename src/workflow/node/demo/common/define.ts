@@ -27,15 +27,9 @@ export function NODE_DEFINE({ Action }: ComponentInput) {
               // display 直接显示在工作流中的
               environments: ['config'],
               actions: [
-                Action.define({ type: 'picklist', inputs: { options: [] } }),
-                Action.hookDefine({
-                  allFieldsResolved(field) {
-                    (field.context as ComponentContext).pluginMethod('getList').then((list) => {
-                      field.inputs.update((inputs) => {
-                        return { ...inputs, options: list };
-                      });
-                    });
-                  },
+                Action.define({ type: 'picklist' }),
+                Action.patchAsyncInputs({
+                  options: (field) => (field.context as ComponentContext).pluginMethod('getList'),
                 }),
               ],
             })

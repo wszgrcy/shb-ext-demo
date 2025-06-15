@@ -1,7 +1,8 @@
 import { ManifestInput } from '@shenghuabi/sdk/server';
 import { NODE_DEFINE } from '../common/define';
 import * as ddg from 'duck-duck-scrape';
-let query = `请帮我将这个问题转换为更简洁、明确且适合搜索引擎查询的形式。如果有必要，可以添加相关的关键词或术语，但避免使用模糊或过于笼统的表达。例如，如果用户的问题是'如何学好英语'，你可以将其优化为'学习英语的有效方法'或者'提高英语水平的学习资源'。请确保转换后的内容能够更准确地反映用户的需求，并且更容易在搜索引擎中找到相关结果。`;
+let query = `请帮我将这个问题转换为更简洁、明确且适合搜索引擎查询的形式。如果有必要，可以添加相关的关键词或术语，但避免使用模糊或过于笼统的表达。例如，如果用户的问题是'如何学好英语'，你可以将其优化为'学习英语的有效方法'或者'提高英语水平的学习资源'。请确保转换后的内容能够更准确地反映用户的需求，并且更容易在搜索引擎中找到相关结果。
+请直接返回转换后的问题`;
 const prompt2 = `使用提供的上下文回答用户查询，并且仅在上下文中明确提供<source_id>标签时，才包含内联引用，格式为[source_id]。
 
 指南:
@@ -28,12 +29,14 @@ export function duckduckgoRunner(input: ManifestInput) {
     override async run() {
       return async () => {
         let instance = this.injector.get(input.provider.root.ChatService);
-        let data = this.getParsedNode(NODE_DEFINE(input.componentDefine));
+        let data = this.getParsedNode(NODE_DEFINE(input.componentDefine as any));
         console.log('配置', data);
         const chatInput = this.#chatUtil.interpolate(data.data.value, this.inputValueObject$$());
         console.log(chatInput);
 
-        let res = (await instance.chat()).stream({
+        let res = await (
+          await instance.chat()
+        ).chat({
           messages: [
             {
               role: 'system',
@@ -42,12 +45,10 @@ export function duckduckgoRunner(input: ManifestInput) {
             { role: 'user', content: [{ text: chatInput, type: 'text' }] },
           ],
         });
-        let content1 = '';
-        for await (const item of res) {
-          content1 += item.content;
-        }
-        console.log('查询问题', content1);
+        let content1 = res.content;
 
+        console.log('查询问题', content1);
+        // todo 之前这里正常,但是本次更新测试时这里出现问题,未知.
         const searchResults = await ddg.search(content1, {
           safeSearch: ddg.SafeSearchType.STRICT,
           locale: 'cn-zh',

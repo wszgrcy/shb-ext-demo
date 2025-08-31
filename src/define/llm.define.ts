@@ -1,7 +1,8 @@
-import { ComponentInput } from '@shenghuabi/sdk/componentDefine';
+import { asVirtualGroup, setComponent } from '@piying/view-angular-core';
 import * as v from 'valibot';
+import { asColumn } from '../action/layout';
 
-export function LLM_CONFIG(label: string, { Action }: ComponentInput) {
+export function LLM_CONFIG(label: string) {
   return v.pipe(
     v.intersect([
       v.pipe(
@@ -14,12 +15,10 @@ export function LLM_CONFIG(label: string, { Action }: ComponentInput) {
           ),
         }),
         v.title(label),
-        Action.asColumn()
+        asColumn()
       ),
     ]),
-    Action.asVirtualGroup(),
-    Action.define({
-      type: 'accordion',
-    })
+    asVirtualGroup(),
+    setComponent('accordion')
   );
 }

@@ -29,7 +29,7 @@ export function duckduckgoRunner(input: ManifestInput) {
     override async run() {
       return async () => {
         let instance = this.injector.get(input.provider.root.ChatService);
-        let data = this.getParsedNode(NODE_DEFINE(input.componentDefine as any));
+        let data = this.getParsedNode(NODE_DEFINE);
         console.log('配置', data);
         const chatInput = this.#chatUtil.interpolate(data.data.value, this.inputValueObject$$());
         console.log(chatInput);

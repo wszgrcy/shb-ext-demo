@@ -16,7 +16,7 @@ export const manifestFactory = (options: any): ManifestFactoy => {
             runner: class DemoNode extends input.provider.workflow.NodeRunnerBase {
               override async run() {
                 return async () => {
-                  let data = this.getParsedNode(NODE_DEFINE(input.componentDefine));
+                  let data = this.getParsedNode(NODE_DEFINE);
                   console.log(data);
                   return { value: 'demo' };
                 };
@@ -84,7 +84,7 @@ export const manifestFactory = (options: any): ManifestFactoy => {
             provide: input.provider.knowledge.NormalKnowledgeService,
             useClass: class extends input.provider.knowledge.NormalKnowledgeService {
               async create(collection: NormalCollectionInlineType): Promise<void> {
-                vscode.window.showWarningMessage(`集合被创建 ${collection.collectionName}`)
+                vscode.window.showWarningMessage(`集合被创建 ${collection.collectionName}`);
                 return super.create(collection);
               }
             },
@@ -94,11 +94,11 @@ export const manifestFactory = (options: any): ManifestFactoy => {
             provide: input.provider.knowledge.QdrantClientService,
             useClass: class extends input.provider.knowledge.QdrantClientService {
               deleteCollection(name: string) {
-                vscode.window.showWarningMessage(`集合被创建 ${name}`)
+                vscode.window.showWarningMessage(`集合被创建 ${name}`);
                 return super.deleteCollection(name);
               }
               createCollection(collection_name: string, args_1: any): Promise<boolean> {
-                vscode.window.showWarningMessage(`准备创建 ${collection_name}`)
+                vscode.window.showWarningMessage(`准备创建 ${collection_name}`);
                 return super.createCollection(collection_name, args_1);
               }
             },
@@ -108,4 +108,3 @@ export const manifestFactory = (options: any): ManifestFactoy => {
     };
   };
 };
-

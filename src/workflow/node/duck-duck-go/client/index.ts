@@ -3,8 +3,8 @@ import { NODE_DEFINE } from '../common/define';
 
 export default (input: ComponentInput) => {
   return {
-    displayConfig: NODE_DEFINE(input),
-    config: NODE_DEFINE(input),
+    displayConfig: NODE_DEFINE,
+    config: NODE_DEFINE,
     initData: () => {
       return {
         data: {

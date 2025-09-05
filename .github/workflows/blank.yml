@@ -24,7 +24,7 @@ jobs:
       - name: Build project
         run: npm run auto-publish
         id: build
-      - run: echo "xxxx{{steps.build.VERSION}}yyyy"
+      - run: echo "xxxx{{steps.build.outputs.VERSION}}yyyy"
         # outputs:
         #   xxx: {{steps.}}
       # - name: Release

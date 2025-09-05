@@ -2,12 +2,9 @@ import { version, name } from '../assets/package.json';
 import * as core from '@actions/core';
 export async function main() {
   let { $ } = await import('execa');
-  let result2 = await $`git tag`;
-  let exist = result2.stdout
-    .trim()
-    .split(/\r\n|\n/)
-    .some((item) => item === version);
-  if (exist) {
+  let result2 = await $`git ls-remote --tags --exit-code origin refs/tags/${version}`;
+  console.log(result2);
+  if (result2.stdout) {
     return;
   }
   await $({ stdio: 'inherit' })`npm run local-publish`;

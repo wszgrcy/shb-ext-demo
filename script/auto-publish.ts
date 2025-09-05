@@ -12,6 +12,7 @@ export async function main() {
     console.log('相同');
     return;
   }
+  console.log(version)
   // await $({ stdio: 'inherit' })`npm run local-publish`;
   // await $({ stdio: 'inherit' })`git tag ${version}`;
   // await $({ stdio: 'inherit' })`git push origin ${version}`;

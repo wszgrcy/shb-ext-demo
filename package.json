@@ -12,6 +12,7 @@
 		"auto-publish": "tsx ./script/auto-publish.ts"
 	},
 	"devDependencies": {
+		"@actions/core": "^1.11.1",
 		"@eslint/js": "^9.13.0",
 		"@stylistic/eslint-plugin": "^2.9.0",
 		"@types/node": "^22.0.0",

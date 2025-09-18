@@ -1,6 +1,6 @@
 {
-	"name": "shb-ext-demo",
-	"displayName": "shb-ext-demo",
+	"name": "ext-demo",
+	"displayName": "演示插件",
 	"description": "生花笔插件演示",
 	"version": "0.0.5",
 	"publisher": "wszgrcy",

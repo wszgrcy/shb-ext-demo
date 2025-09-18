@@ -1,7 +1,6 @@
-import { ComponentInput } from '@shenghuabi/sdk/componentDefine';
 import { NODE_DEFINE } from '../common/define';
 
-export default (input: ComponentInput) => {
+export default () => {
   return {
     // 在节点中显示
     displayConfig: NODE_DEFINE,

@@ -30,8 +30,8 @@
 		"typescript-eslint": "^8.26.0"
 	},
 	"dependencies": {
-		"@piying/view-angular": "^1.5.8",
-		"@shenghuabi/sdk": "^0.2.0",
+		"@piying/view-angular": "^1.5.11",
+		"@shenghuabi/sdk": "^0.3.8",
 		"duck-duck-scrape": "^2.2.7",
 		"rxjs": "7.8.1",
 		"valibot": "1.1.0"

@@ -2,7 +2,7 @@
 	"name": "ext-demo",
 	"displayName": "演示插件",
 	"description": "生花笔插件演示",
-	"version": "0.0.5",
+	"version": "0.0.6",
 	"publisher": "wszgrcy",
 	"repository": "https://github.com/wszgrcy/shb-ext-demo",
 	"engines": {
